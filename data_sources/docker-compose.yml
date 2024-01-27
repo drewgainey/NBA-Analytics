@@ -23,12 +23,26 @@ services:
     build:
       context: ./populate_db
       dockerfile: Dockerfile
-    command: ["python", "test.py"]
+    command: ["python", "populate_db.py"]
     networks:
       - sports_data
     depends_on:
       source_db:
         condition: service_healthy
+
+  extract_load:
+    build:
+      context: ./extract_load
+      dockerfile: Dockerfile
+    command: ["python", "extract.py"]
+    volumes:
+      - ./keys/storageKeyFile.json:/credentials/keyfile.json
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/credentials/keyfile.json
+    networks:
+      - sports_data
+    depends_on:
+      - populate_db
 
 networks:
   sports_data:

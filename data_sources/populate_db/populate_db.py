@@ -2,10 +2,15 @@ import requests
 import pandas as pd
 import xml.etree.ElementTree as ET
 import psycopg2
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+api_key = os.environ.get('API_KEY')
 
 # Step 1: Make an API request
 try:
-    url = "http://api.sportradar.us/nba/trial/v8/en/seasons/2023/REG/rankings.xml?api_key=6ev5erarhn5xa9wzez3h88gb"
+    url = "http://api.sportradar.us/nba/trial/v8/en/seasons/2023/REG/rankings.xml?api_key={api_key}"
     response = requests.get(url)
     xml_data = response.content
 except:
