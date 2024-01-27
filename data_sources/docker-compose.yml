@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  source_db:
+    image: postgres:9.3
+    ports:
+      - "5433:5432"
+    networks:
+      - sports_data
+    environment:
+      POSTGRES_DB: source_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d source_db -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./source_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  populate_db:
+    build:
+      context: ./populate_db
+      dockerfile: Dockerfile
+    command: ["python", "test.py"]
+    networks:
+      - sports_data
+    depends_on:
+      source_db:
+        condition: service_healthy
+
+networks:
+  sports_data:
+    driver: bridge
