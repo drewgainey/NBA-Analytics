@@ -49,22 +49,22 @@ bucket = storage_client.bucket(bucket_name)
 blob = bucket.blob(destination_blob_name)
 blob.upload_from_filename(source_file_name)
 
-# Google BigQuery parameters
-project_id = 'your_project_id'
-dataset_id = 'your_dataset_id'
-table_id = 'your_table_id'
+# # Google BigQuery parameters
+# project_id = 'your_project_id'
+# dataset_id = 'your_dataset_id'
+# table_id = 'your_table_id'
 
-# Load data into BigQuery
-client = bigquery.Client(project=project_id)
-table_ref = client.dataset(dataset_id).table(table_id)
-job_config = bigquery.LoadJobConfig()
-job_config.source_format = bigquery.SourceFormat.CSV
-job_config.autodetect = True
+# # Load data into BigQuery
+# client = bigquery.Client(project=project_id)
+# table_ref = client.dataset(dataset_id).table(table_id)
+# job_config = bigquery.LoadJobConfig()
+# job_config.source_format = bigquery.SourceFormat.CSV
+# job_config.autodetect = True
 
-uri = f'gs://{bucket_name}/{destination_blob_name}'
-load_job = client.load_table_from_uri(
-    uri, table_ref, job_config=job_config
-)
+# uri = f'gs://{bucket_name}/{destination_blob_name}'
+# load_job = client.load_table_from_uri(
+#     uri, table_ref, job_config=job_config
+# )
 
-# Waits for the job to complete
-load_job.result()
+# # Waits for the job to complete
+# load_job.result()
