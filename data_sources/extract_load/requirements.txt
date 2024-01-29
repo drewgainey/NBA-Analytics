@@ -1,4 +1,7 @@
-psycopg2-binary
 python-dotenv
 google-cloud-storage
 google-cloud-bigquery
+requests
+pandas
+aiohttp
+asyncio
