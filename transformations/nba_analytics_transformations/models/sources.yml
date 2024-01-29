@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: nba-analytics-412517
+    database: nba-analytics-412517
+    schema: raw_data
+    tables:
+      - name: team_rankings
+      - name: player_statistics
